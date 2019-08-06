@@ -3,17 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
-//use Dotenv\Exception\ValidationException;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Console\Presets\React;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Validator;
-//use Validator;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+
 
 class LoginController extends Controller
 {
@@ -54,8 +48,7 @@ class LoginController extends Controller
             $request->filled('remember')
         );
 
-        if ($authenticate)
-        {
+        if ($authenticate) {
             $request->session()->regenerate();
             $this->clearLoginAttempts($request);
             $user = Auth::user();

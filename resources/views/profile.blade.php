@@ -7,7 +7,16 @@
                 <div class="card">
                     <div class="card-header">Настройки профиля</div>
                     <div class="col-md-12 text-center">
-                        <img src="/uploads/avatars/{{$user->avatar}}" style="width: 150px;height: 150px;border-radius: 50%;margin-right: 25px">
+                        <p>original</p>
+                        <img src="{{$user->getAvatarImage()}}" style="width: 150px;height: 150px;border-radius: 50%;margin-right: 25px">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <p> img / 2</p>
+                        <img src="{{$user->getAvatarMedium()}}" style="width: 150px;height: 150px;border-radius: 50%;margin-right: 25px">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <p> img / 4</p>
+                        <img src="{{$user->getAvatarSmall()}}" style="width: 150px;height: 150px;border-radius: 50%;margin-right: 25px">
                     </div>
                     <div class="card-body">
                         @if(Session::has('message'))
@@ -47,11 +56,6 @@
                                     @enderror
                                 </div>
                             </div>
-{{--                            @if (session('status'))--}}
-{{--                                <div class="alert alert-success">--}}
-{{--                                    {{ session('status') }}--}}
-{{--                                </div>--}}
-{{--                            @endif--}}
                             <div class="form-group row">
                                 <label for="avatar" class="col-md-4 col-form-label text-md-right">Обновления фото профиля</label>
 

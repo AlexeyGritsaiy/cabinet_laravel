@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -15,17 +15,13 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'email', 'password', 'status','verify_token'
+        'name', 'email', 'password', 'status', 'verify_token'
     ];
 
 
     protected $hidden = [
         'password', 'remember_token',
     ];
-    public function isWait(): bool
-    {
-        return $this->status === self::STATUS_WAIT;
-    }
 
     public function isActive(): bool
     {
@@ -44,5 +40,33 @@ class User extends Authenticatable
         ]);
     }
 
+    public function isWait(): bool
+    {
+        return $this->status === self::STATUS_WAIT;
+    }
 
+    public function getAvatarPath()
+    {
+        return 'public/avatar/' . $this->id;
+    }
+
+    public function getAvatarImage()
+    {
+        return $this->getAvatarPublicPath() . '/' . $this->avatar;
+    }
+
+    public function getAvatarPublicPath()
+    {
+        return '/storage/avatar/' . $this->id;
+    }
+
+    public function getAvatarMedium()
+    {
+        return $this->getAvatarPublicPath() . '/md_' . $this->avatar;
+    }
+
+    public function getAvatarSmall()
+    {
+        return $this->getAvatarPublicPath() . '/l_' . $this->avatar;
+    }
 }

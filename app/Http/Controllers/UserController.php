@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\Facades\Image;
-use App\User;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 
 class UserController extends Controller
@@ -40,13 +41,34 @@ class UserController extends Controller
             $user->save();
         }
 
-        if ($request->hasFile('avatar'))
-        {
+        if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $filename));
 
-            $user->avatar = $filename;
+            $path = $user->getAvatarPath();
+            $name = Str::random() . '.' . $avatar->getClientOriginalExtension();
+
+            $avatar->storePubliclyAs($path, $name);
+
+            $image = Image::make($avatar);
+
+            $sizes = [
+                'md' => [
+                    $image->getWidth() / 2,
+                    $image->getHeight() / 2,
+                ],
+                'l' => [
+                    $image->getWidth() / 4,
+                    $image->getHeight() / 4,
+                ]
+            ];
+
+            foreach ($sizes as $key => $size) {
+                $image
+                    ->resize(...$size)
+                    ->save(storage_path('app/' . $path) . '/' . $key . '_' . $name);
+            }
+
+            $user->avatar = $name;
             Session::flash('message', 'Фото профиля еспешно обновлеоено');
             $user->save();
         }
