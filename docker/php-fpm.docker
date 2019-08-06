@@ -1,0 +1,26 @@
+FROM php:7.2-fpm
+
+RUN apt-get update && apt-get install -y libmcrypt-dev \
+    && docker-php-ext-install pdo_mysql
+
+RUN apt-get update -y && apt-get install -y libpng-dev
+
+RUN apt-get update && \
+    apt-get install -y \
+        zlib1g-dev
+
+RUN docker-php-ext-install mbstring
+
+RUN docker-php-ext-install zip
+
+RUN apt-get install -y --no-install-recommends \
+    libjpeg62-turbo-dev \
+    libxpm-dev \
+    libvpx-dev \
+&& docker-php-ext-configure gd \
+    --with-jpeg-dir=/usr/lib/x86_64-linux-gnu/ \
+    --with-xpm-dir=/usr/lib/x86_64-linux-gnu/ \
+    --with-vpx-dir=/usr/lib/x86_64-linux-gnu/ \
+&& docker-php-ext-install gd
+
+WORKDIR /var/www
