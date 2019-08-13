@@ -19,9 +19,9 @@
                         <img src="{{$user->getAvatarSmall()}}" style="width: 150px;height: 150px;border-radius: 50%;margin-right: 25px">
                     </div>
                     <div class="card-body">
-                        @if(Session::has('message'))
-                            <p class="alert alert-info">{{ Session::get('message') }}</p>
-                        @endif
+{{--                        @if(Session::has('message'))--}}
+{{--                            <p class="alert alert-info">{{ Session::get('message') }}</p>--}}
+{{--                        @endif--}}
                         <form method="POST" action="{{ route('cabinet.profile') }}" enctype="multipart/form-data">
                             @csrf
 

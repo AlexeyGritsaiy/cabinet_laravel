@@ -35,9 +35,8 @@
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
-{{--                    @if(Session::has('message'))--}}
-{{--                        <p class="alert alert-info">{{ Session::get('message') }}</p>--}}
-{{--                @endif--}}
+                @include('layouts.partials.flash')
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -76,7 +75,9 @@
                 </div>
             </div>
         </nav>
-
+        @if(Session::has('message'))
+            <p class="alert alert-info">{{ Session::get('message') }}</p>
+        @endif
         <main class="py-4">
             @yield('content')
         </main>
