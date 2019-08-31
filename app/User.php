@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+* @property string $status
+*/
 class User extends Authenticatable
 {
 
